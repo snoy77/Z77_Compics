@@ -12,18 +12,21 @@ void setup() {
   Serial.begin(9600);
 
   myOLED.begin();//Типа инициализация экранчика
-  myOLED.setFont(RusFont);//Инициализация русского шрифта
+  myOLED.setFont(SmallFont);//Инициализация русского шрифта
 }
-
 void loop() {
   
   Serial.println(sendMes);//Сообщает о себе на порт для обнаружения.
   if(Serial.available() > 0){
     strCount++;
-    ViewMassage = Serial.read();
+    if(strCount > 4){
+      myOLED.clrScr();
+      strCount = 0;
+    }
+    ViewMassage = Serial.readString();
     myOLED.print(ViewMassage, CENTER, strCount*12);
     myOLED.update();
+    
   }
-  
   delay(300);
 }

@@ -12,7 +12,7 @@ s = serial.Serial('COM4')
 res = s.readline()
 res = res.decode("Ascii")
 print(res)
-s.writelines(b'hello')
+s.write(b'start bot')
 #------------------------------
 
 
@@ -25,5 +25,7 @@ for event in long_pull.listen():
           if event.to_me:
                user_id = event.user_id
                message = event.text.lower()
+               message = "-> mes: \"" + message + "\""
+               s.write(bytes(message, 'utf-8'))
                print(getUserName(user_id) + ": \"" + event.text + "\"")
 
